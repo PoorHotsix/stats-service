@@ -21,7 +21,7 @@ public class OrderEventListener {
     private final ObjectMapper objectMapper;
 
     //주문생성시 테이블에 업데이트
-    @KafkaListener(topics = "order-created-stats", groupId = "stats-service")
+    @KafkaListener(topics = "order-complete-stat", groupId = "stats-service")
     public void handleOrderCreatedEvent(String message) {
         try {
             // 1. JSON -> DTO 변환
@@ -39,7 +39,7 @@ public class OrderEventListener {
 
             // 월간: monthly, yyyy-MM
             upsertStat("monthly", createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM")), event);
-
+            log.info("order-complete-stat event :{}", event);
         } catch (Exception e) {
             log.error("OrderEventListener 처리 중 오류", e);
         }
@@ -54,6 +54,7 @@ public class OrderEventListener {
             stat.setTotalSales(stat.getTotalSales() + event.getTotalSales());
             stat.setOrderCount(stat.getOrderCount() + 1);
             stat.setItemCount(stat.getItemCount() + event.getTotalQuantity());
+            log.info("주문 완료 stat totalsales:{}, orderCount:{}, itemCount:{} ", stat.getTotalSales(), stat.getOrderCount(), stat.getItemCount());
         }
         table.putItem(stat);
     }
@@ -78,7 +79,7 @@ public class OrderEventListener {
 
             // 월간: monthly, yyyy-MM
             updateStatMinus("monthly", createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM")), event);
-
+            log.info("OrderEventCancled event :{}", event);
         } catch (Exception e) {
             log.error("OrderEventListener 취소 처리 중 오류", e);
         }
@@ -91,6 +92,7 @@ public class OrderEventListener {
             stat.setTotalSales(stat.getTotalSales() - event.getTotalSales());
             stat.setOrderCount(stat.getOrderCount() - 1);
             stat.setItemCount(stat.getItemCount() - event.getTotalQuantity());
+            log.info("주문 취소 처리 stat totalsales:{}, orderCount:{}, itemCount:{} ", stat.getTotalSales(), stat.getOrderCount(), stat.getItemCount());
             // 음수 방지 (선택)
             if (stat.getTotalSales() < 0) stat.setTotalSales(0L);
             if (stat.getOrderCount() < 0) stat.setOrderCount(0L);

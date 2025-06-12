@@ -1,6 +1,6 @@
 
 server:
-  port: 18000
+  port: 19000
 
 spring:
   application:
@@ -14,24 +14,22 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/inkcloud
-          # jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
-          jwk-set-uri: http://localhost:8080/realms/inkcloud/protocol/openid-connect/certs
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+          # jwk-set-uri: http://localhost:8080/realms/inkcloud/protocol/openid-connect/certs
   
   kafka:
-    bootstrap-servers: localhost:9093
+    bootstrap-servers: broker:9092
+    consumer:
+      auto-offset-reset: earliest
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: "com.inkcloud.review_service.dto,com.inkcloud.product_service.dto"
 
 
 aws:
   dynamodb:
     region: ap-northeast-2
-    endpoint: http://localhost:8000  # 로컬 DynamoDB 테스트용
+    # endpoint: http://localhost:8000  # 로컬 DynamoDB 테스트용
 #     access-key: ${AWS_ACCESS_KEY_ID}
 #     secret-key: ${AWS_SECRET_ACCESS_KEY}
     
