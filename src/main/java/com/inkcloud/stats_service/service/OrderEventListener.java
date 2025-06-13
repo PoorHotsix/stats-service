@@ -60,7 +60,7 @@ public class OrderEventListener {
     }
 
     //주문취소시 테이블에서 마이너스 
-    @KafkaListener(topics = "order-canceled-stats", groupId = "stats-service")
+    @KafkaListener(topics = "order-canceled-st", groupId = "stats-service")
     public void handleOrderCanceledEvent(String message) {
         try {
             // 1. JSON -> DTO 변환
