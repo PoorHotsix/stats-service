@@ -29,7 +29,6 @@ spring:
 aws:
   dynamodb:
     region: ap-northeast-2
-    # endpoint: http://localhost:8000  # 로컬 DynamoDB 테스트용
     access-key: ${AWS_ACCESS_KEY_ID}
     secret-key: ${AWS_SECRET_ACCESS_KEY}
     
