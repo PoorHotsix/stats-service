@@ -79,7 +79,7 @@ public class OrderEventListener {
 
             // 월간: monthly, yyyy-MM
             updateStatMinus("monthly", createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM")), event);
-            log.info("OrderEventCancled event :{}", event);
+            log.info("OrderEventCanceled event :{}", event);
         } catch (Exception e) {
             log.error("OrderEventListener 취소 처리 중 오류", e);
         }
