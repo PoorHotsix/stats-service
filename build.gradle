@@ -48,7 +48,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'  
 	implementation 'org.springframework.boot:spring-boot-starter-security'                
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server' 
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client' 
+	// implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client' 
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 	implementation 'software.amazon.awssdk:dynamodb:2.25.24'
